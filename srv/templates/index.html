@@ -4,17 +4,96 @@
     <title>App Log-in</title>
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/main_style.css') }}">
     <!--<script src="/static/scripts/login.js"></script>!-->
+    <script>
+
+        /* function onLoginClick(){
+            displayLoginForm();
+            loginAsync();
+        } 
+
+        */
+
+        /* function displayLoginForm(){
+            document.getElementById("center_nav_text").innerHTML =
+            "<form id='login_form' method='post'>name: <input type='text' name='login'>"+
+            "pass: <input type='password' name='pass'><input type='submit' value='>' id='login_btn' onclick='loginAsync()''></form>";
+        } */
+
+        products_arr=[];
+
+        function readTextFile(file)
+        {
+            var rawFile = new XMLHttpRequest();
+            var it=0;
+
+            rawFile.onreadystatechange = function ()
+            {
+                if(rawFile.readyState === 4)
+                {
+                    if(rawFile.status === 200 || rawFile.status == 0)
+                    {
+                        var allText = rawFile.responseText;
+                        var pr="";
+                        for(var x=0;x<allText.length;x++){
+
+                            if(allText.charAt(x)=='\n'){
+                                products_arr[it]=pr;
+                                document.getElementById("av_products").innerHTML+="<li>"+pr+"</li>";
+                                pr="";
+                                it++;
+                                continue;
+                            }
+                            var pr=pr+allText.charAt(x);     
+                        }
+                        products_arr[it]=pr;
+                        document.getElementById("av_products").innerHTML+="<li>"+pr+"</li>";
+                        console.log(products_arr);
+                        //alert(allText);
+                    }
+                }
+            }
+            rawFile.open("GET", "products_file");
+            rawFile.send();
+        }
+
+        function changeProductContent(){
+            var searchVal=document.getElementById("search_product").value;
+            document.getElementById("av_products").innerHTML="";
+
+            for(var i=0;i<products_arr.length;i++){
+                if((products_arr[i]).includes(searchVal)){
+                    document.getElementById("av_products").innerHTML+="<li>"+products_arr[i]+"</li>";
+                }
+            }
+
+
+            console.log(arraycontainsturtles);
+        }
+
+        readTextFile("products.txt");
+
+        function ajaxFunc(){
+            const xhttp = new XMLHttpRequest();
+            xhttp.onload = function() {
+            document.getElementById("register_nav").style.display="none";
+            console.log("loginasync");
+        }
+        xhttp.open("GET", "login_form");
+        xhttp.send();
+        }
+
+    </script>
 </head>
 <body>
 
     <div id="top_section">
         <ul class="nav">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#news">Sale</a></li>
-            <li><a href="#contact">Contact</a></li>
-            <li style="float:right"><a class="active" href="#about">Log-in</a></li>
-            <li style="float:right"><a class="active" href="#about">Register</a></li>
-          </ul>
+            <li class="top_a"><a class="app_name">app_shop</a></li>
+            <li class="top_a"><a href="#home" class="menu">home</a></li>
+            <li class="top_a"><a href="#news" class="menu">sale</a></li>
+            <li class="top_a"><a href="#contact" class="menu">contact</a></li>
+            <li class="top_a" style="float:right"><a class="menu">username: {{name_pass}}</a></a></li>
+          </ul> 
     </div>
 
     <div id="middle_section">
@@ -23,7 +102,23 @@
         </div>
 
         <div id="middle_center_section">
-            mc
+            <div class="search">
+                Category: <select>
+                    <option value="0">chessboards</option>
+                    <option value="1">accesories</option>
+                    <option value="2">books</option>
+                    <option value="3">clothes</option>
+                </select>
+                 | <input type="text" placeholder="Search.." class="search_input" onchange="changeProductContent()" id="search_product">
+              </div>
+
+              <div class="products">
+                <ul id="av_products">
+
+                </ul>
+
+              </div>
+
         </div>
 
         <div id="middle_right_section">

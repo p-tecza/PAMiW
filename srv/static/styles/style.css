@@ -20,6 +20,7 @@ p.p_center_L{
     display: inline-block;
     text-align:center;
     width:100%;
+    margin-top:5%;
 }
 
 form.login_form{
@@ -36,4 +37,20 @@ form.login_form{
     background-color:black;
     color:white;
     border:1px solid white;
+}
+
+div.register_center{
+    margin-top:10%;
+    width:100%;
+    text-align: center;
+}
+
+a.register{
+    color:gray;
+    text-decoration: underline;
+}
+
+a.register:hover{
+    cursor:pointer;
+    color:#333311;
 }
