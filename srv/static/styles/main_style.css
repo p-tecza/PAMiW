@@ -108,3 +108,32 @@ input.search_input{
     background-color:black;
     color:white;
 }
+
+#dropdownUserContent{
+display: none;
+   position:absolute;
+   background-color:#444;
+   min-width: 160px;
+   min-height: 3%;
+   overflow: auto;
+   z-index: 1;
+   padding-top:0.5%;
+   color:white;
+   text-decoration: none;
+}
+
+#dropdownUserContent a:visited{
+    color:white;
+    text-decoration: none;
+}
+
+#dropdownUserContent a:link{
+    color:white;
+    text-decoration: none;
+}
+
+
+#dropdownUserContent:hover{
+    background-color:#222;
+    cursor:pointer;
+}

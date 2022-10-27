@@ -1,20 +1,35 @@
 from flask import Flask, redirect, url_for, render_template, request
+from bcrypt import checkpw
+from uuid import uuid4
 
 app=Flask(__name__)
 
+hashed_password=b'$2b$12$L7QA3bW53Ulp0m4jYaF23.4S3UTFUH.tZVXB9IgJXdMd2TdHCN8tO'
+authenticated_users={}
+name_of_user=""
+#Pass135
 @app.route("/")
 def login_page():
+    sid = request.cookies.get("sid")
+    if sid in authenticated_users:
+        return render_template("index.html",name_pass=name_of_user)
     return render_template("login.html")
 
-@app.route("/page", methods=["POST"])
+@app.route("/page", methods=["POST","GET"])
 def main_page():
     name = request.form["name"]
     password = request.form["pass"]
 
-    if password=="password" and name=="user":
-        return render_template("index.html", name_pass=name)
+    if checkpw(password.encode('utf-8'),hashed_password) and name=="user":
+        sid = str(uuid4())
+        authenticated_users[sid] = name
+        global name_of_user
+        name_of_user=name
+        response = redirect("/", code=302)
+        response.set_cookie("sid", sid)
+        return response
     else:
-        return "Wrong name/pass", 400
+        return render_template("login.html", wrongLoginData="wrong password/username.")
 
 
 @app.route("/login_form", methods=["GET"])
