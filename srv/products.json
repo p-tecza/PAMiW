@@ -1,0 +1,67 @@
+[
+    {
+        "product_name":"chessboard #1",
+        "quantity":"1000",
+        "category":"chessboards"
+    },
+
+    {
+        "product_name":"chessboard #2",
+        "quantity":"1500",
+        "category":"chessboards"
+    },
+
+    {
+        "product_name":"chessboard #3",
+        "quantity":"500",
+        "category":"chessboards"
+    },
+
+    {
+        "product_name":"clock timer standard",
+        "quantity":"500",
+        "category":"accessories"
+    },
+
+    {
+        "product_name":"clock timer xs",
+        "quantity":"120",
+        "category":"accessories"
+    },
+
+    {
+        "product_name":"moves notebook",
+        "quantity":"15000",
+        "category":"accessories"
+    },
+
+    {
+        "product_name":"basic check-mate patterns",
+        "quantity":"50",
+        "category":"books"
+    },
+
+    {
+        "product_name":"aggressive chess",
+        "quantity":"30",
+        "category":"books"
+    },
+
+    {
+        "product_name":"shirt wh&bl",
+        "quantity":"150",
+        "category":"shirts"
+    },
+
+    {
+        "product_name":"shirt ceesy chess",
+        "quantity":"150",
+        "category":"shirts"
+    },
+
+    {
+        "product_name":"shirt the king",
+        "quantity":"100",
+        "category":"shirts"
+    }
+]

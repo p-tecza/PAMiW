@@ -1,4 +1,5 @@
-from flask import Flask, redirect, url_for, render_template, request
+from time import sleep
+from flask import Flask, redirect, url_for, render_template, request, make_response
 from bcrypt import checkpw
 from uuid import uuid4
 
@@ -8,6 +9,7 @@ hashed_password=b'$2b$12$L7QA3bW53Ulp0m4jYaF23.4S3UTFUH.tZVXB9IgJXdMd2TdHCN8tO'
 authenticated_users={}
 name_of_user=""
 #Pass135
+
 @app.route("/")
 def login_page():
     sid = request.cookies.get("sid")
@@ -37,6 +39,21 @@ def login_test():
     return "display_login_form", 200
 
 
+@app.route("/logout", methods=["GET"])
+def logout():
+    #global authenticated_users
+    #authenticated_users={}
+    response= make_response(redirect(url_for("logout_delay")))
+    response.set_cookie('sid', '', expires=0)
+    print("EO")
+    return response #nie dziala jak powinno
+
+@app.route("/logout_delay")
+def logout_delay():
+    sleep(1)
+    return redirect(url_for("login_page"))#nie dziala jak powinno
+
+
 @app.route("/products_file", methods=["GET"])
 def fetch_products():
     f=open("products.txt","r")
@@ -56,6 +73,13 @@ def index():
         return render_template("index.html", username=login, greet="user: ")
     else:
         return render_template("index.html")
+
+@app.route("/fetch_json")
+def return_json():
+    f=open("products.json","r")
+    content=f.read()
+    #print(content)
+    return content
 
 if __name__=="__main__":
     app.run(host="0.0.0.0", port=5000)
