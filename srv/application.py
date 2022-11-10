@@ -43,15 +43,10 @@ def login_test():
 def logout():
     #global authenticated_users
     #authenticated_users={}
-    response= make_response(redirect(url_for("logout_delay")))
+    response= make_response(request.host)
     response.set_cookie('sid', '', expires=0)
-    print("EO")
-    return response #nie dziala jak powinno
-
-@app.route("/logout_delay")
-def logout_delay():
-    sleep(1)
-    return redirect(url_for("login_page"))#nie dziala jak powinno
+    #print(request.host)
+    return response 
 
 
 @app.route("/products_file", methods=["GET"])

@@ -1,6 +1,7 @@
 var json_products;
-
 var curr_json_products;
+
+localStorage.setItem("logout_bool","false");
 
 
         function readTextFile(file)
@@ -161,7 +162,21 @@ var curr_json_products;
             document.getElementById("dropdownUserContent").style.display = "none";
             console.log("lgout");
 
+            localStorage.setItem("logout_bool","true");
+
             const logoutAjax = new XMLHttpRequest();
+
+            logoutAjax.onload=function(){
+                redirectSite=this.responseText;
+                window.location.replace("http://"+redirectSite);
+                document.getElementById("logout_success_info").innerHTML="logout successful.";
+                console.log(redirectSite);
+                console.log("dzilam");
+                logout_bool=true;
+                window.glob="test";
+
+            }
+
             logoutAjax.open("GET", "logout");
             logoutAjax.send();
 
