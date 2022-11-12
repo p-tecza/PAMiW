@@ -70,7 +70,7 @@ localStorage.setItem("logout_bool","false");
                     }
                 }
             }
-            rawFile.open("GET", "products_file");
+            rawFile.open("GET", "fetch_json");
             rawFile.send();
         }
 

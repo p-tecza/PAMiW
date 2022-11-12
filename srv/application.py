@@ -2,8 +2,11 @@ from time import sleep
 from flask import Flask, redirect, url_for, render_template, request, make_response
 from bcrypt import checkpw
 from uuid import uuid4
+import redis
+import json
 
 app=Flask(__name__)
+redis_db=redis.Redis()
 
 hashed_password=b'$2b$12$L7QA3bW53Ulp0m4jYaF23.4S3UTFUH.tZVXB9IgJXdMd2TdHCN8tO'
 authenticated_users={}
@@ -49,11 +52,11 @@ def logout():
     return response 
 
 
-@app.route("/products_file", methods=["GET"])
+""" @app.route("/products_file", methods=["GET"])
 def fetch_products():
-    f=open("products.txt","r")
-    content=f.read()
-    return content, 200
+    #f=open("products.txt","r")
+    #content=f.read()
+    return 200 """
 
 @app.route("/simple_text", methods=["GET","POST"])
 def test():
@@ -69,14 +72,53 @@ def index():
     else:
         return render_template("index.html")
 
-@app.route("/fetch_json")
+
+def prepare_json(db): #git
+
+    whole_json="["
+    it=0
+
+    for x in db:
+        whole_json+=(redis_db.get(x).decode())
+        whole_json=whole_json.replace("'",'"')
+        if(it!=len(db)-1):
+            whole_json+=","
+        it+=1
+
+    whole_json+="]"
+
+    return whole_json
+
+@app.route("/fetch_json", methods=["GET"]) #git
 def return_json():
-    f=open("products.json","r")
+    f=open("./srv/products.json","r")
     content=f.read()
+
+    db_products=redis_db.keys()
+    
+    res=prepare_json(db_products)
+
+    #whole_json="["
+
+    """ for x in db_products:
+        whole_json+=(redis_db.get(x).decode())
+        whole_json=whole_json.replace("'",'"')
+        whole_json+=","
+
+    whole_json+="]"
+
+    print("=======================")
+    print(whole_json)
+    print("=======================")
+    print(json.dumps(whole_json))
+    print("=======================") """
+
     #print(content)
-    return content
+    return res
 
 if __name__=="__main__":
     app.run(host="0.0.0.0", port=5000)
+
+
 
 
