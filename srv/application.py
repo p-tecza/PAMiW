@@ -16,8 +16,13 @@ hashed_password=b'$2b$12$L7QA3bW53Ulp0m4jYaF23.4S3UTFUH.tZVXB9IgJXdMd2TdHCN8tO'
 authenticated_users={}
 name_of_user=""
 number_of_entries=0 #TESTOWANIE
+previous_no_entries=0 #TESTOWANIE
 app.register_blueprint(sse, url_prefix="/stream") #nowe
 #Pass135
+
+if(number_of_entries==2):
+    sse.publish(number_of_entries, type="msg") #test
+
 
 @app.route("/")
 def login_page():
@@ -27,7 +32,7 @@ def login_page():
         number_of_entries+=1 #TESTOWANIE
         sse.publish(number_of_entries, type="msg") #NADMIAR
         #job()
-        return render_template("index.html",name_pass=name_of_user)
+        return render_template("index.html",name_pass=name_of_user, number_of_entries=number_of_entries)
     return render_template("login.html")
 
 @app.route("/page", methods=["POST","GET"])
@@ -104,18 +109,18 @@ def return_json():
     return res
 
 
-@app.route("/")
+@app.route("/subscribe")
 def job(): #TESTOWANIE
+    args = request.args
+
+    print(args)
+
     global number_of_entries
-
-   
-    sse.publish(number_of_entries, type="msg")
-
-    """ while(True):
-        sleep(2)
-        ech=str(number_of_entries) """
-
-    return "Message sent!"
+    global previous_no_entries
+    while True:
+        if(number_of_entries>previous_no_entries):
+            previous_no_entries=number_of_entries
+            return str(previous_no_entries)
 
 
 
@@ -147,7 +152,7 @@ def job():
 
 
 if __name__=="__main__":
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port=5000, threaded=True) # threaded = True dla long pollingu
 
 
 

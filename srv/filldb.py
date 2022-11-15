@@ -14,5 +14,5 @@ content=json.load(f)
 for i in content:
     print(str(i))
     redis_db.mset({str(i["product_name"]):str(i)})
-
+    
 

@@ -12,6 +12,8 @@ function readJSON() {
         if (rawFile.readyState === 4) {
             if (rawFile.status === 200 || rawFile.status == 0) {
 
+                document.getElementById("av_products").innerHTML="";
+
                 fetch('/fetch_json')
                     .then((response) => response.json())
                     .then((json) => {
@@ -195,13 +197,42 @@ function set_output(text) {
   }
 
 es = new EventSource("/stream")
-es.addEventListener("msg", function (event) {
+es.addEventListener("myevent", function (event) {
+    console.log("EVENT SOURCE");
     set_output("entries: " + event.value)
 }, false);
 es.addEventListener("error", function (event) {
     set_output("Failed to connect to event stream. Is the server running?");
 }, false);
 
+
+async function subscribe() {
+
+    var currentVisitors=getElementById("sse_test").innerHTML;
+
+    let response = await fetch("/subscribe" + new URLSearchParams({noVisitors:currentVisitors}));
+  
+    if (response.status == 502) {
+      // Status 502 is a connection timeout error,
+      // may happen when the connection was pending for too long,
+      // and the remote server or a proxy closed it
+      // let's reconnect
+      await subscribe();
+    } else if (response.status != 200) {
+      // An error - let's show it
+      set_output(response.statusText);
+      // Reconnect in one second
+      await new Promise(resolve => setTimeout(resolve, 3000));
+      await subscribe();
+    } else {
+      // Get and show the message
+      let message = await response.text();
+      set_output(message + " entries");
+      // Call subscribe() again to get the next message
+      await subscribe();
+    }
+  }
+  subscribe();
 
 
 /* checkUpdates = function() {
