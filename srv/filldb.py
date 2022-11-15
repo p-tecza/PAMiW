@@ -3,10 +3,12 @@ import json
 from redis.commands.json.path import Path
 
 # pip3 install redis
+# redis-cli
+# service redis-server start
 
 redis_db=redis.Redis()
 
-f=open("srv\products.json","r")
+f=open("products.json","r")
 content=json.load(f)
 
 for i in content:

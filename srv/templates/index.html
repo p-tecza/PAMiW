@@ -50,7 +50,11 @@
         </div>
 
         <div id="middle_right_section">
-            mr
+            <form action="/job" id="start" method="post">
+                <input type="hidden" value="10" name="workload"/>
+                <input type="submit" value="start" name="start"/>
+              </form>
+            <p id="sse_test">{{number_of_entries}}</p>
         </div>
 
     </div>
