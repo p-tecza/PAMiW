@@ -2,66 +2,77 @@
     {
         "product_name":"chessboard #1",
         "quantity":"1000",
-        "category":"chessboards"
+        "category":"chessboards",
+        "image":"chessboard_1.jpg"
     },
 
     {
         "product_name":"chessboard #2",
         "quantity":"1500",
-        "category":"chessboards"
+        "category":"chessboards",
+        "image":"chessboard_2.jpg"
     },
 
     {
         "product_name":"chessboard #3",
         "quantity":"500",
-        "category":"chessboards"
+        "category":"chessboards",
+        "image":"chessboard_3.jpg"
     },
 
     {
         "product_name":"clock timer standard",
         "quantity":"500",
-        "category":"accessories"
+        "category":"accessories",
+        "image":"clock_1.jpg"
     },
 
     {
         "product_name":"clock timer xs",
         "quantity":"120",
-        "category":"accessories"
+        "category":"accessories",
+        "image":"clock_2.jpg"
     },
 
     {
         "product_name":"moves notebook",
         "quantity":"15000",
-        "category":"accessories"
+        "category":"accessories",
+        "image":"notebook_1.jpg"
     },
 
     {
         "product_name":"basic check-mate patterns",
         "quantity":"50",
-        "category":"books"
+        "category":"books",
+        "image":"book_1.jpg"
     },
 
     {
         "product_name":"aggressive chess",
         "quantity":"30",
-        "category":"books"
+        "category":"books",
+        "image":"book_2.jpg"
     },
 
     {
         "product_name":"shirt wh&bl",
         "quantity":"150",
-        "category":"shirts"
+        "category":"shirts",
+        "image":"shirt_1.jpg"
     },
 
     {
         "product_name":"shirt cheesy chess",
         "quantity":"150",
-        "category":"shirts"
+        "category":"shirts",
+        "image":"shirt_2.jpg"
     },
 
     {
         "product_name":"shirt the king",
         "quantity":"100",
-        "category":"shirts"
+        "category":"shirts",
+        "image":"shirt_3.jpg"
     }
 ]

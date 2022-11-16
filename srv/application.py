@@ -1,8 +1,9 @@
 from time import sleep
-from flask import Flask, redirect, url_for, render_template, request, make_response, Response
+from flask import Flask, redirect, url_for, render_template, request, make_response, send_from_directory
 from bcrypt import checkpw
 from uuid import uuid4
 import redis
+import os
 import json
 from flask_sse import sse
 from datetime import datetime #chyba niepotrzebne
@@ -18,6 +19,9 @@ name_of_user=""
 number_of_entries=0 #TESTOWANIE
 previous_no_entries=0 #TESTOWANIE
 app.register_blueprint(sse, url_prefix="/stream") #nowe
+
+""" app.add_url_rule('/favicon.ico',
+                 redirect_to=url_for('static', filename='favicon.ico')) """
 #Pass135
 
 if(number_of_entries==2):
@@ -109,19 +113,33 @@ def return_json():
     return res
 
 
-@app.route("/subscribe")
+@app.route("/subscribe", methods=["POST"])
 def job(): #TESTOWANIE
-    args = request.args
+    data = request.get_json()
+    previous_no_entries=data['noVisitors']
 
-    print(args)
+    #print(data['noVisitors'])
 
     global number_of_entries
-    global previous_no_entries
-    while True:
-        if(number_of_entries>previous_no_entries):
-            previous_no_entries=number_of_entries
-            return str(previous_no_entries)
 
+    while True:
+        if(number_of_entries>int(previous_no_entries)):
+            return str(number_of_entries)
+
+
+@app.route("/register")
+def register_user():
+    return render_template("register.html")
+
+
+@app.route("/addnewuser")
+def add_user():
+    return "ok"
+
+""" @app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'),
+                               'favicon.ico', mimetype='image/vnd.microsoft.icon') """
 
 
 """ @app.route("/job", methods=["POST"]) #nowe

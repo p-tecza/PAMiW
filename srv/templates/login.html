@@ -3,6 +3,7 @@
 <head>
     <title>App Log-in</title>
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
     <script>var logoutVar=false</script>
     <script src="/static/scripts/login.js" type="module"></script>
 </head>
@@ -22,7 +23,7 @@
 </div>
 
 <div class="register_center">
-    no account? <a class="register">register.</a>
+    no account? <a class="register" href="/register">register.</a>
 </div>
 
 <div class="logout_success">

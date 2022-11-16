@@ -21,11 +21,12 @@ function readJSON() {
 
                         for (var i = 0; i < json.length; i++) {
 
-                            pr = json[i].product_name
-                            qt = json[i].quantity
-                            ct = json[i].category
+                            pr = json[i].product_name;
+                            qt = json[i].quantity;
+                            ct = json[i].category;
+                            im = json[i].image;
                             document.getElementById("av_products").innerHTML += "<li>" + pr + " | amount: "
-                                + qt + " | category: " + ct + "</li>";
+                                + qt + " | category: " + ct + " | image: "+im+"</li>";
 
                         }
 
@@ -208,9 +209,33 @@ es.addEventListener("error", function (event) {
 
 async function subscribe() {
 
-    var currentVisitors=getElementById("sse_test").innerHTML;
+    var noVisitorsVar='0';
+    //var currentVisitors=document.getElementById("sse_test").innerHTML;
 
-    let response = await fetch("/subscribe" + new URLSearchParams({noVisitors:currentVisitors}));
+
+    //console.log(currentVisitors);
+
+    console.log("wys");
+
+    const params = {
+        noVisitors:noVisitorsVar
+    };
+
+    const options = {
+        method: 'POST',
+        body: JSON.stringify( params )  
+    };
+
+
+    let response = await fetch("/subscribe", {
+        method: "POST",
+        credentials: "include",
+        body: JSON.stringify(params),
+        cache: "no-cache",
+        headers: new Headers({
+          "content-type": "application/json"
+        })
+      });
   
     if (response.status == 502) {
       // Status 502 is a connection timeout error,
@@ -228,7 +253,9 @@ async function subscribe() {
       // Get and show the message
       let message = await response.text();
       set_output(message + " entries");
+      noVisitorsVar=message;
       // Call subscribe() again to get the next message
+      await new Promise(resolve => setTimeout(resolve, 3000));
       await subscribe();
     }
   }
