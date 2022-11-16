@@ -1,28 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Application</title>
+    <title>the shop</title>
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
     <script src="/static/scripts/register.js"></script>
-    <!-- <script>
-
-        console.log("test");
-
-        let x=1;
-
-        function loadData(){
-            const xhttp = new XMLHttpRequest();
-            xhttp.onload = function() {
-            document.getElementById("demo").innerHTML =
-            this.responseText;
-        }
-        xhttp.open("GET", "simple_text");
-        xhttp.send();
-
-        }
-
-    </script> -->
 </head>
 <body>
 
@@ -34,24 +16,19 @@
     <form class="login_form" action="/addnewuser" method="post">
         <table>
             <tr><td>e-mail:</td><td><input id="email" name="email" type="text" onchange="emailValidation()"></td></tr> 
-            <tr><td>name:</td><td><input name="name" type="text"></td></tr>
-            <tr><td>pass:</td><td><input name="pass" type="password"></td></tr>
-            <tr><td>repeat pass:</td><td><input name="pass" type="password"></td></tr>
+            <tr><td>name:</td><td><input id="register_name" name="name" type="text"></td></tr>
+            <tr><td>pass:</td><td><input id="register_pass" name="pass" type="password" onchange="checkData()"></td></tr>
+            <tr><td>repeat pass:</td><td><input id="register_r_pass" name="pass_r" type="password" onchange="checkData()"></td></tr>
             <tr><td colspan="2"><input name="submit" type="submit" value="register" id="login_button" class="login_btn"></td></tr> 
         </table>
     </form>
-
+    <br>{{errorMsg}}
 
 </div>
 
 <div class="register_center">
     already got account? <a class="register" href="/">log-in.</a>
 </div>
-
-
-
-    <button onclick="loadData()">click</button>
-
 
 <p id="demo"></p>
 

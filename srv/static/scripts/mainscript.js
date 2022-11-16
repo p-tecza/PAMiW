@@ -96,9 +96,9 @@ function changeProductContentText() {
         pr = wysw[i].product_name
         qt = wysw[i].quantity
         ct = wysw[i].category
-
+        im = wysw[i].image;
         document.getElementById("av_products").innerHTML += "<li>" + pr + " | amount: "
-            + qt + " | category: " + ct + "</li>";
+            + qt + " | category: " + ct + " | image: "+im+"</li>";
     }
 
     /* for(var i=0;i<products_arr.length;i++){
@@ -126,9 +126,9 @@ function changeProductContentSelect() {
         pr = wysw[i].product_name
         qt = wysw[i].quantity
         ct = wysw[i].category
-
+        im = wysw[i].image;
         document.getElementById("av_products").innerHTML += "<li>" + pr + " | amount: "
-            + qt + " | category: " + ct + "</li>";
+            + qt + " | category: " + ct + " | image: "+im+"</li>";
     }
 
 }
@@ -252,7 +252,7 @@ async function subscribe() {
     } else {
       // Get and show the message
       let message = await response.text();
-      set_output(message + " entries");
+      set_output("no. entries: "+message);
       noVisitorsVar=message;
       // Call subscribe() again to get the next message
       await new Promise(resolve => setTimeout(resolve, 3000));

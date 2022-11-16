@@ -1,19 +1,17 @@
-from time import sleep
 from flask import Flask, redirect, url_for, render_template, request, make_response, send_from_directory
-from bcrypt import checkpw
+from bcrypt import checkpw, hashpw, gensalt
 from uuid import uuid4
 import redis
-import os
-import json
 from flask_sse import sse
-from datetime import datetime #chyba niepotrzebne
 
 app=Flask(__name__)
 redis_url = "redis://127.0.0.1"
 app.config["REDIS_URL"] = redis_url
 redis_db=redis.Redis()
+redis_user_db=redis.Redis(db=1)
+redis_email_db=redis.Redis(db=2)
 
-hashed_password=b'$2b$12$L7QA3bW53Ulp0m4jYaF23.4S3UTFUH.tZVXB9IgJXdMd2TdHCN8tO'
+#hashed_password=b'$2b$12$L7QA3bW53Ulp0m4jYaF23.4S3UTFUH.tZVXB9IgJXdMd2TdHCN8tO'
 authenticated_users={}
 name_of_user=""
 number_of_entries=0 #TESTOWANIE
@@ -44,7 +42,12 @@ def main_page():
     name = request.form["name"]
     password = request.form["pass"]
 
-    if checkpw(password.encode('utf-8'),hashed_password) and name=="user":
+    hashed_password=redis_user_db.get(name)
+
+    if not hashed_password:
+        return render_template("login.html", wrongLoginData="user does not exist.")
+
+    if checkpw(password.encode('utf-8'),hashed_password):# and name=="user":
         sid = str(uuid4())
         authenticated_users[sid] = name
         global name_of_user
@@ -132,41 +135,22 @@ def register_user():
     return render_template("register.html")
 
 
-@app.route("/addnewuser")
+@app.route("/addnewuser", methods=["POST"])
 def add_user():
-    return "ok"
 
-""" @app.route('/favicon.ico')
-def favicon():
-    return send_from_directory(os.path.join(app.root_path, 'static'),
-                               'favicon.ico', mimetype='image/vnd.microsoft.icon') """
+    login = request.form["name"]
+    password = request.form["pass"]
+    email=request.form["email"]
 
+    if(redis_user_db.get(login)):
+        return render_template("register.html", errorMsg="user with that name already exists.")
+    else:
+        pass_bytes=password.encode('utf-8')
+        hash=hashpw(pass_bytes,gensalt())
+        redis_user_db.mset({str(login):hash})
+        redis_email_db.mset({str(login):str(email)})
+        return redirect("/",code=302)
 
-""" @app.route("/job", methods=["POST"]) #nowe
-def job():
-  #if db.get("status") == "busy":
-    #return "Busy!", 200
-
-  workload = request.form.get("workload", "10")
-  try:
-    w = int(workload)
-    w = 1 if w < 0 else w
-    t = 0
-
-    #db.set("status", "busy")
-
-    while t < w:
-      sleep(1)
-      t += 1
-      #db.set("progress", int(100 * t/w))
-      sse.publish(t, type="msg")
-    #db.set("status", "idle")
-
-  except:
-    return "Error while processing the job", 400
-
-  timestamp = datetime.now().strftime("%H:%M:%S")
-  return "[" + timestamp + "] Done!" """
 
 
 if __name__=="__main__":

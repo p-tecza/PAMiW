@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>App Log-in</title>
+    <title>the shop</title>
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/main_style.css') }}">
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
     <script src="/static/scripts/mainscript.js"></script>
@@ -51,11 +51,7 @@
         </div>
 
         <div id="middle_right_section">
-            <form action="/job" id="start" method="post">
-                <input type="hidden" value="10" name="workload"/>
-                <input type="submit" value="start" name="start"/>
-              </form>
-            <p id="sse_test">{{number_of_entries}}</p><p> entries</p>
+            <p id="sse_test">no. entries: {{number_of_entries}}</p>
         </div>
 
     </div>
