@@ -4,3 +4,5 @@ https://projectsplaza.com/how-to-login-logout-in-flask/
 window.location.replace("http://localhost:5000"); - to chyba git
 
 baza danych redis moze
+
+upload plików do dodania
