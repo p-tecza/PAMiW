@@ -2,7 +2,6 @@ from flask import Flask, redirect, url_for, render_template, request, make_respo
 from bcrypt import checkpw, hashpw, gensalt
 from uuid import uuid4
 import redis
-from flask_sse import sse
 
 app=Flask(__name__)
 redis_url = "redis://127.0.0.1"
@@ -11,20 +10,10 @@ redis_db=redis.Redis()
 redis_user_db=redis.Redis(db=1)
 redis_email_db=redis.Redis(db=2)
 
-#hashed_password=b'$2b$12$L7QA3bW53Ulp0m4jYaF23.4S3UTFUH.tZVXB9IgJXdMd2TdHCN8tO'
 authenticated_users={}
 name_of_user=""
 number_of_entries=0 #TESTOWANIE
 previous_no_entries=0 #TESTOWANIE
-app.register_blueprint(sse, url_prefix="/stream") #nowe
-
-""" app.add_url_rule('/favicon.ico',
-                 redirect_to=url_for('static', filename='favicon.ico')) """
-#Pass135
-
-if(number_of_entries==2):
-    sse.publish(number_of_entries, type="msg") #test
-
 
 @app.route("/")
 def login_page():
@@ -32,8 +21,6 @@ def login_page():
     if sid in authenticated_users:
         global number_of_entries #TESTOWANIE
         number_of_entries+=1 #TESTOWANIE
-        sse.publish(number_of_entries, type="msg") #NADMIAR
-        #job()
         return render_template("index.html",name_pass=name_of_user, number_of_entries=number_of_entries)
     return render_template("login.html")
 
@@ -41,13 +28,12 @@ def login_page():
 def main_page():
     name = request.form["name"]
     password = request.form["pass"]
-
     hashed_password=redis_user_db.get(name)
 
     if not hashed_password:
         return render_template("login.html", wrongLoginData="user does not exist.")
 
-    if checkpw(password.encode('utf-8'),hashed_password):# and name=="user":
+    if checkpw(password.encode('utf-8'),hashed_password):
         sid = str(uuid4())
         authenticated_users[sid] = name
         global name_of_user
@@ -58,24 +44,11 @@ def main_page():
     else:
         return render_template("login.html", wrongLoginData="wrong password/username.")
 
-
-@app.route("/login_form", methods=["GET"])
-def login_test():
-    return "display_login_form", 200
-
-
 @app.route("/logout", methods=["GET"])
 def logout():
-    #global authenticated_users
-    #authenticated_users={}
     response= make_response(request.host)
     response.set_cookie('sid', '', expires=0)
-    #print(request.host)
     return response 
-
-@app.route("/simple_text", methods=["GET","POST"])
-def test():
-    return "<h1>works for me</h1>", 200
 
 @app.route("/index", methods=["POST", "GET"])
 def index():
@@ -106,13 +79,8 @@ def prepare_json(db): #git
 
 @app.route("/fetch_json", methods=["GET"]) #git
 def return_json():
-    f=open("products.json","r")
-    content=f.read()
-
     db_products=redis_db.keys()
-    
     res=prepare_json(db_products)
-
     return res
 
 
@@ -121,19 +89,15 @@ def job(): #TESTOWANIE
     data = request.get_json()
     previous_no_entries=data['noVisitors']
 
-    #print(data['noVisitors'])
-
     global number_of_entries
 
     while True:
         if(number_of_entries>int(previous_no_entries)):
             return str(number_of_entries)
 
-
 @app.route("/register")
 def register_user():
     return render_template("register.html")
-
 
 @app.route("/addnewuser", methods=["POST"])
 def add_user():

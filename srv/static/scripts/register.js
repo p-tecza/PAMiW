@@ -6,8 +6,12 @@ function emailValidation(){
     
     if(!res){
         document.getElementById("email").style.backgroundColor="#FBB2B2";
+        document.getElementById("login_button").disabled=true;
+        document.getElementById("error_message").innerHTML="e-mail is not correct.";
     }else{
         document.getElementById("email").style.backgroundColor="#FFFFFF";
+        document.getElementById("login_button").disabled=false;
+        document.getElementById("error_message").innerHTML="";
     }
 
 }
@@ -20,12 +24,14 @@ function checkData(){
 
         if(p!=rp){
             document.getElementById("register_r_pass").style.backgroundColor="#FBB2B2";
+            document.getElementById("login_button").disabled=true;
+            document.getElementById("error_message").innerHTML="passwords not equal.";
         }else{
             document.getElementById("register_r_pass").style.backgroundColor="#FFFFFF";
+            document.getElementById("login_button").disabled=false;
+            document.getElementById("error_message").innerHTML="";
         }
 
     }
 
 }
-
-console.log("oo");

@@ -11,13 +11,11 @@ function readJSON() {
     rawFile.onreadystatechange = function () {
         if (rawFile.readyState === 4) {
             if (rawFile.status === 200 || rawFile.status == 0) {
-
                 document.getElementById("av_products").innerHTML="";
 
                 fetch('/fetch_json')
                     .then((response) => response.json())
                     .then((json) => {
-
 
                         for (var i = 0; i < json.length; i++) {
 
@@ -36,7 +34,6 @@ function readJSON() {
                         curr_json_products = json_products;
                         console.log("TU JEST JSON PROD: ");
                         console.log(json_products);
-                        //productsArr=JSON.parse(json);
 
                         console.log(typeof (json));
 
@@ -45,27 +42,6 @@ function readJSON() {
                         }
 
                     });
-
-
-
-
-                /*  var allText = rawFile.responseText;
-                 var pr="";
-                 for(var x=0;x<allText.length;x++){
-
-                     if(allText.charAt(x)=='\n'){
-                         products_arr[it]=pr;
-                         document.getElementById("av_products").innerHTML+="<li>"+pr+"</li>";
-                         pr="";
-                         it++;
-                         continue;
-                     }
-                     var pr=pr+allText.charAt(x);     
-                 }
-                 products_arr[it]=pr;
-                 document.getElementById("av_products").innerHTML+="<li>"+pr+"</li>";
-                 console.log(products_arr);
-                 //alert(allText); */
             }
         }
     }
@@ -91,8 +67,6 @@ function changeProductContentText() {
 
 
     for (var i = 0; i < wysw.length; i++) {
-
-        //console.log(single_prod);
         pr = wysw[i].product_name
         qt = wysw[i].quantity
         ct = wysw[i].category
@@ -100,12 +74,6 @@ function changeProductContentText() {
         document.getElementById("av_products").innerHTML += "<li>" + pr + " | amount: "
             + qt + " | category: " + ct + " | image: "+im+"</li>";
     }
-
-    /* for(var i=0;i<products_arr.length;i++){
-        if((products_arr[i]).includes(searchVal)){
-            document.getElementById("av_products").innerHTML+="<li>"+products_arr[i]+"</li>";
-        }
-    } */
 
 }
 
@@ -121,8 +89,6 @@ function changeProductContentSelect() {
 
 
     for (var i = 0; i < wysw.length; i++) {
-
-        //console.log(single_prod);
         pr = wysw[i].product_name
         qt = wysw[i].quantity
         ct = wysw[i].category
@@ -131,16 +97,6 @@ function changeProductContentSelect() {
             + qt + " | category: " + ct + " | image: "+im+"</li>";
     }
 
-}
-
-function ajaxFunc() {
-    const xhttp = new XMLHttpRequest();
-    xhttp.onload = function () {
-        document.getElementById("register_nav").style.display = "none";
-        console.log("loginasync");
-    }
-    xhttp.open("GET", "login_form");
-    xhttp.send();
 }
 
 function showUserContent() {
@@ -197,35 +153,15 @@ function set_output(text) {
     output.innerText = text
   }
 
-es = new EventSource("/stream")
-es.addEventListener("myevent", function (event) {
-    console.log("EVENT SOURCE");
-    set_output("entries: " + event.value)
-}, false);
-es.addEventListener("error", function (event) {
-    set_output("Failed to connect to event stream. Is the server running?");
-}, false);
-
-
 async function subscribe() {
 
     var noVisitorsVar='0';
-    //var currentVisitors=document.getElementById("sse_test").innerHTML;
-
-
-    //console.log(currentVisitors);
 
     console.log("wys");
 
     const params = {
         noVisitors:noVisitorsVar
     };
-
-    const options = {
-        method: 'POST',
-        body: JSON.stringify( params )  
-    };
-
 
     let response = await fetch("/subscribe", {
         method: "POST",
@@ -261,33 +197,3 @@ async function subscribe() {
   }
   subscribe();
 
-
-/* checkUpdates = function() {
-    xhr = new XMLHttpRequest(); 
-    xhr.open("GET","/progress?task=142");
-    xhr.onreadystatechange = e => { console.log(e); checkUpdates(); };
-    xhr.ontimeout = checkUpdates();
-    xhr.send();
-    }
-checkUpdates(); */
-
-
-
-/* var data = fetch('/fetch_json')
-    .then((response) => response.json())
-    .then((json) => {
-
-
-        console.log("TEST");
-
-        //console.log(json["product_name"]);
-
-        //productsArr=JSON.parse(json);
-    
-        console.log(typeof(json));
-
-        for(x in json["product_name"]){
-            console.log("ok: "+x);
-        }
-    
-    }); */
