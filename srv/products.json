@@ -3,76 +3,87 @@
         "product_name":"chessboard #1",
         "quantity":"1000",
         "category":"chessboards",
-        "image":"chessboard_1.jpg"
+        "image":"chessboard_1.jpg",
+        "price":"50 PLN"
     },
 
     {
         "product_name":"chessboard #2",
         "quantity":"1500",
         "category":"chessboards",
-        "image":"chessboard_2.jpg"
+        "image":"chessboard_2.jpg",
+        "price":"50 PLN"
     },
 
     {
         "product_name":"chessboard #3",
         "quantity":"500",
         "category":"chessboards",
-        "image":"chessboard_3.jpg"
+        "image":"chessboard_3.jpg",
+        "price":"50 PLN"
     },
 
     {
         "product_name":"clock timer standard",
         "quantity":"500",
         "category":"accessories",
-        "image":"clock_1.jpg"
+        "image":"clock_1.jpg",
+        "price":"50 PLN"
     },
 
     {
         "product_name":"clock timer xs",
         "quantity":"120",
         "category":"accessories",
-        "image":"clock_2.jpg"
+        "image":"clock_2.jpg",
+        "price":"50 PLN"
     },
 
     {
         "product_name":"moves notebook",
         "quantity":"15000",
         "category":"accessories",
-        "image":"notebook_1.jpg"
+        "image":"notebook_1.jpg",
+        "price":"50 PLN"
     },
 
     {
         "product_name":"basic check-mate patterns",
         "quantity":"50",
         "category":"books",
-        "image":"book_1.jpg"
+        "image":"book_1.jpg",
+        "price":"50 PLN"
     },
 
     {
         "product_name":"aggressive chess",
         "quantity":"30",
         "category":"books",
-        "image":"book_2.jpg"
+        "image":"book_2.jpg",
+        "price":"50 PLN"
     },
 
     {
         "product_name":"shirt wh&bl",
         "quantity":"150",
         "category":"shirts",
-        "image":"shirt_1.jpg"
+        "image":"shirt_1.jpg",
+        "price":"50 PLN"
     },
 
     {
         "product_name":"shirt cheesy chess",
         "quantity":"150",
         "category":"shirts",
-        "image":"shirt_2.jpg"
+        "image":"shirt_2.jpg",
+        "price":"50 PLN"
     },
 
     {
         "product_name":"shirt the king",
         "quantity":"100",
         "category":"shirts",
-        "image":"shirt_3.jpg"
+        "image":"shirt_3.jpg",
+        "price":"50 PLN"
     }
 ]

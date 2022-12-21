@@ -1,4 +1,4 @@
-from flask import Flask, redirect, url_for, render_template, request, make_response, send_from_directory
+from flask import Flask, redirect, url_for, render_template, request, make_response, send_file
 from bcrypt import checkpw, hashpw, gensalt
 from uuid import uuid4
 import redis
@@ -115,6 +115,11 @@ def add_user():
         redis_email_db.mset({str(login):str(email)})
         return redirect("/",code=302)
 
+
+@app.route("/get_image/<image_name>")
+def response_image(image_name):
+    path="product-images/"+image_name
+    return send_file(path,mimetype="img/gif")
 
 
 if __name__=="__main__":

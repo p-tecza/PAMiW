@@ -19,12 +19,17 @@ function readJSON() {
 
                         for (var i = 0; i < json.length; i++) {
 
+                            
                             pr = json[i].product_name;
                             qt = json[i].quantity;
                             ct = json[i].category;
                             im = json[i].image;
-                            document.getElementById("av_products").innerHTML += "<li>" + pr + " | amount: "
-                                + qt + " | category: " + ct + " | image: "+im+"</li>";
+                            mn = json[i].price;
+                            prepareImages(pr,im,mn);
+                            
+                            //innerHTML += "<li>" + pr + " | amount: "
+                            //     + qt + " | category: " + ct + " | image: "+im+"</li>";
+                            //document.getElementById(im).appendChild(imgDescription);
 
                         }
 
@@ -71,8 +76,12 @@ function changeProductContentText() {
         qt = wysw[i].quantity
         ct = wysw[i].category
         im = wysw[i].image;
-        document.getElementById("av_products").innerHTML += "<li>" + pr + " | amount: "
-            + qt + " | category: " + ct + " | image: "+im+"</li>";
+        mn = wysw[i].price;
+
+        prepareImages(pr,im,mn);
+
+        // document.getElementById("av_products").innerHTML += "<li>" + pr + " | amount: "
+        //     + qt + " | category: " + ct + " | image: "+im+"</li>";
     }
 
 }
@@ -93,8 +102,12 @@ function changeProductContentSelect() {
         qt = wysw[i].quantity
         ct = wysw[i].category
         im = wysw[i].image;
-        document.getElementById("av_products").innerHTML += "<li>" + pr + " | amount: "
-            + qt + " | category: " + ct + " | image: "+im+"</li>";
+        mn = wysw[i].price;
+
+        prepareImages(pr,im,mn);
+
+        // document.getElementById("av_products").innerHTML += "<li>" + pr + " | amount: "
+        //     + qt + " | category: " + ct + " | image: "+im+"</li>";
     }
 
 }
@@ -197,3 +210,25 @@ async function subscribe() {
   }
   subscribe();
 
+function prepareImages(pr,im,mn){
+    var imgDiv = document.createElement("div");
+    imgDiv.setAttribute("id","div_"+im);
+    imgDiv.classList.add("product_div");
+
+    var img = document.createElement("img");
+    img.src="get_image/"+im;
+    console.log(img.src);
+    img.classList.add('product_image')
+    img.setAttribute("id",im)
+
+    pr_short=String(pr).substring(0,10);
+
+    var imgDescription = document.createElement("p");
+    imgDescription.innerHTML= pr_short + "...|" + mn
+    imgDescription.title=pr+" | "+mn;
+
+    imgDiv.appendChild(img);
+    imgDiv.appendChild(imgDescription);
+
+    document.getElementById("av_products").appendChild(imgDiv);
+}
