@@ -85,5 +85,13 @@
         "category":"shirts",
         "image":"shirt_3.jpg",
         "price":"50 PLN"
+    },
+
+    {
+        "product_name":"shirt no. E1",
+        "quantity":"100",
+        "category":"shirts",
+        "image":"shirt_3.jpg",
+        "price":"50 PLN"
     }
 ]

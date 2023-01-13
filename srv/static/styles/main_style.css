@@ -4,39 +4,43 @@ html{
 }
 
 body{
-    background-color: black;
+    background-color: #222;
     color:white;
     font-family: 'Courier New', Courier, monospace;
     height: 100%;
     width:100%;
-    margin:0%;
+    margin:0;
 }
 
 #top_section{
     /* background-color:yellow; */
     width:100%;
     height:5%;
+    margin-bottom:0;
 }
 
 #middle_section{
     /* background-color: white; */
     display:inline-block;
     width:100%;
-    height:auto;
+    height:90%;
+    margin:0;
     /* border-top:2px solid white; */
 }
 
 #bottom_section{
-    background-color:#222;
     width:100%;
-    height:5%;
+    height:auto;
+    margin:0;
+    background-color: #222;
 }
 
 #middle_left_section{
-    background-color:#222;
-    height:1080px;
+    height:100%;
     width:10%;
     float:left;
+    margin:0;
+    background-color:#222;
     /* outline:1px solid white;
     outline-offset: -1px; */
 }
@@ -47,15 +51,17 @@ body{
     width:80%;
     height:100%;
     float:left;
+    margin:0;
+    background-color:black;
     /* outline:1px solid white;
     outline-offset: -1px; */
 }
 
 #middle_right_section{
-    background-color:#222;
-    height:1080px;
+    height:100%;
     width:10%;
     float:left;
+    margin:0;
     /* outline:1px solid white;
     outline-offset: -1px; */
 }
@@ -115,7 +121,7 @@ input.search_input{
 display: none;
    position:absolute;
    background-color:#444;
-   min-width: 160px;
+   min-width: 156px;
    min-height: 3%;
    overflow: auto;
    z-index: 1;
@@ -136,13 +142,14 @@ display: none;
 
 
 #dropdownUserContent:hover{
-    background-color:#222;
+    background-color:white;
+    color:#222;
     cursor:pointer;
 }
 
 .product_image{
-    width:225px;
-    height:225px;
+    width:12vw;
+    height:20vh;
     border:1px solid red;
     display: block;
     margin-left: auto;
@@ -151,6 +158,43 @@ display: none;
 
 .product_div{
     float:left;
-    margin:1%;
+    margin-top:1vh;
+    margin-left:5vw;
     text-align: center;
+}
+
+.products{
+    margin-top:2vh;
+    margin-left:auto;
+    margin-right:auto;
+    width: 80vw;
+    height: 63vh;
+}
+
+#sse_test{
+    position: absolute;
+    bottom: 0;
+    right: 1;
+}
+
+#left_menu{
+    width:auto;
+    height:auto;
+    margin:0;
+    background-color:#222;
+    margin-top:150%;
+}
+
+li.left_menu_button{
+    padding:10%;
+    background-color:#222;
+    list-style:none;
+    border-top:white solid 1px;
+    text-align: center;
+    margin:0;
+}
+
+li.left_menu_button:hover{
+    background-color: black;
+    cursor:pointer;
 }

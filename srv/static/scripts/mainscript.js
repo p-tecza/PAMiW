@@ -3,6 +3,7 @@ var curr_json_products;
 
 localStorage.setItem("logout_bool", "false");
 
+const maxImagesOnPage=12;
 
 function readJSON() {
     var rawFile = new XMLHttpRequest();
@@ -19,7 +20,10 @@ function readJSON() {
 
                         for (var i = 0; i < json.length; i++) {
 
-                            
+                            if(i>=maxImagesOnPage){
+                                break;
+                            }
+
                             pr = json[i].product_name;
                             qt = json[i].quantity;
                             ct = json[i].category;
@@ -72,6 +76,11 @@ function changeProductContentText() {
 
 
     for (var i = 0; i < wysw.length; i++) {
+
+        if(i>=maxImagesOnPage){
+            break;
+        }
+
         pr = wysw[i].product_name
         qt = wysw[i].quantity
         ct = wysw[i].category
@@ -98,6 +107,11 @@ function changeProductContentSelect() {
 
 
     for (var i = 0; i < wysw.length; i++) {
+
+        if(i>=maxImagesOnPage){
+            break;
+        }
+
         pr = wysw[i].product_name
         qt = wysw[i].quantity
         ct = wysw[i].category
