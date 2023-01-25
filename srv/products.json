@@ -1,6 +1,6 @@
 [
     {
-        "product_name":"chessboard #1",
+        "product_name":"chessboard 1",
         "quantity":"1000",
         "category":"chessboards",
         "image":"chessboard_1.jpg",
@@ -8,7 +8,7 @@
     },
 
     {
-        "product_name":"chessboard #2",
+        "product_name":"chessboard 2",
         "quantity":"1500",
         "category":"chessboards",
         "image":"chessboard_2.jpg",
@@ -16,7 +16,7 @@
     },
 
     {
-        "product_name":"chessboard #3",
+        "product_name":"chessboard 3",
         "quantity":"500",
         "category":"chessboards",
         "image":"chessboard_3.jpg",

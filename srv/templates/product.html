@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>the shop</title>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <script>var logoutVar=false</script>
+
+    <script>
+        function getProduct(){
+            let val='{{product}}'
+            fetch("/product_image/"+val).then(
+                (e) => e.json()).then(e=>{
+                    image_here=e[0].image;
+                    price_here=e[0].price;
+
+                    console.log(image_here);
+                    // var imgDiv = document.createElement("div");
+                    // imgDiv.setAttribute("id","div_"+im);
+                    // imgDiv.classList.add("product_div");
+                    var img = document.createElement("img");
+                    img.src="get_image/"+image_here;
+                    img.classList.add('product_image');
+                    document.getElementById("product_image").appendChild(img);
+                    document.getElementById("price").innerHTML="price: "+price_here;
+                })
+        }
+    </script>
+</head>
+<body onload='getProduct()'>
+
+<p class="p_center_L">product:{{product}}</p>
+<div id="product_image" class="center_this"></div>
+<p class="p_center_L" id="price"></p>
+
+</body>
+</html>

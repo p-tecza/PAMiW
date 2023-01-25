@@ -1,4 +1,4 @@
-from flask import Flask, redirect, url_for, render_template, request, make_response, send_file
+from flask import Flask, redirect, url_for, render_template, request, make_response, send_file, session
 from bcrypt import checkpw, hashpw, gensalt
 from uuid import uuid4
 import redis
@@ -14,10 +14,12 @@ authenticated_users={}
 name_of_user=""
 number_of_entries=0 #TESTOWANIE
 previous_no_entries=0 #TESTOWANIE
+app.secret_key ="thekey"
 
 @app.route("/")
 def login_page():
     sid = request.cookies.get("sid")
+    session['things']=[]
     if sid in authenticated_users:
         global number_of_entries #TESTOWANIE
         number_of_entries+=1 #TESTOWANIE
@@ -121,6 +123,27 @@ def response_image(image_name):
     path="product-images/"+image_name
     return send_file(path,mimetype="img/gif")
 
+@app.route("/product_page/get_image/<image_name>")
+def response_image2(image_name):
+    path="product-images/"+image_name
+    return send_file(path,mimetype="img/gif")
+
+
+@app.route("/product_page/<prod_name>", methods=["GET"])
+def prod(prod_name):
+    return render_template("product.html",product=prod_name)
+
+
+@app.route("/product_image/<product_name>")
+def prod_im(product_name):
+    print("BEFORE PROD NAME: "+product_name)
+    product_name=product_name.replace("_"," ")
+    print("PROD NAME: "+product_name)
+    # product_json=redis_db.get(product_name).decode()
+    prod = prepare_json([product_name])
+    #print("PROD JSON: ",product_json)
+    #prods=prepare_json(product_json)
+    return prod
 
 if __name__=="__main__":
     app.run(host="0.0.0.0", port=5000, threaded=True) # threaded = True dla long pollingu

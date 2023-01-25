@@ -238,11 +238,28 @@ function prepareImages(pr,im,mn){
     pr_short=String(pr).substring(0,10);
 
     var imgDescription = document.createElement("p");
-    imgDescription.innerHTML= pr_short + "...|" + mn
+
+    prod_spaceless=""
+    for(x=0;x<pr.length;x++){
+        if([pr[x]]==' '){
+            prod_spaceless+="_"
+        }else{
+            prod_spaceless+=pr[x]
+        }
+    }
+
+    imgDescription.innerHTML= '<a onclick=\"redirectToProduct(\''+prod_spaceless+'\')\">'+pr_short + '...|' + mn+'</a>'
     imgDescription.title=pr+" | "+mn;
 
     imgDiv.appendChild(img);
     imgDiv.appendChild(imgDescription);
 
     document.getElementById("av_products").appendChild(imgDiv);
+}
+
+function redirectToProduct(pr){
+    console.log("produkt: "+pr)
+    page=window.location.host;
+    window.location.replace("http://" + page+"/product_page/"+pr);
+
 }

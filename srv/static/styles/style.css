@@ -75,3 +75,10 @@ a.register:hover{
     0% { opacity: 1; }
     100% { opacity: 0; }
   }
+
+.product_image{
+    width:60vh;
+    display: block;
+    margin-left: auto;
+    margin-right: auto 
+  }
