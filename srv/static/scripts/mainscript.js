@@ -263,3 +263,7 @@ function redirectToProduct(pr){
     window.location.replace("http://" + page+"/product_page/"+pr);
 
 }
+
+function alertMessage(){
+    alert("no promos currently :(")
+}

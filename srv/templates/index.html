@@ -11,9 +11,8 @@
     <div id="top_section">
         <ul class="nav">
             <li class="top_a"><a class="app_name">app_shop</a></li>
-            <li class="top_a"><a href="#home" class="menu">home</a></li>
+            <li class="top_a"><a href="/" class="menu">home</a></li>
             <li class="top_a"><a href="/basketpage" class="menu">basket</a></li>
-            <li class="top_a"><a href="#contact" class="menu">contact</a></li>
             <li class="top_a" style="float:right"><div id="dropdownUser">
                 <a class="menu" id="viewdropdown" onclick="showUserContent()">username: {{name_pass}}</a>
                 <div id="dropdownUserContent" onclick="logoutFunction()">
@@ -28,12 +27,12 @@
         <div id="middle_left_section">
             <div id="left_menu">
                 <ul id="left_menu">
-                    <li class="left_menu_button">promos</li>
-                    <li class="left_menu_button">cos</li>
-                    <li class="left_menu_button">cos</li>
-                    <li class="left_menu_button">cos</li>
-                    <li class="left_menu_button">cos</li>
-                    <li class="left_menu_button">cos</li>
+                    <a class="left"><li class="left_menu_button" onclick="alertMessage()">promos</li></a>
+                    <a href="/redirect_upload" class="left"><li class="left_menu_button">upload</li></a>
+                    <a href="/redirect_browse" class="left"><li class="left_menu_button">browse</li></a>
+                    <a href="/gotocontact" class="left"><li class="left_menu_button">contact</li></a>
+                    <a href="/gotocontact" class="left"><li class="left_menu_button">place</li></a>
+                    <a href="/gotocontact" class="left"><li class="left_menu_button">holder</li></a>
                 </ul>
             </div>
         </div>

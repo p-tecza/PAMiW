@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>the shop</title>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <script>var logoutVar=false</script>
+
+   
+</head>
+<body>
+
+<p class="p_center_L">upload something</p>
+<div id="product_image" class="center_this"></div>
+<p class="p_center_L" id="price"></p>
+
+<div id="file_upload">
+<form action="/upload_file" method="post" enctype="multipart/form-data">
+    <input type="file" name="plik"><br><br>
+    <input type="submit">
+</form>
+</div>
+
+<div id="table_div">
+<table class="center_table"><tr>
+<form action="/">
+    <td><input type="submit" class="login_button" value="return"></td>
+</form>
+</tr></table>
+</div>
+<p class="p_center_S" id="info">after upload check out file at browse tab.</p>
+
+</body>
+</html>

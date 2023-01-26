@@ -4,6 +4,8 @@ from flask_session import Session
 from uuid import uuid4
 import redis
 import json
+from pathlib import Path
+import os
 
 app=Flask(__name__)
 redis_url = "redis://127.0.0.1"
@@ -21,6 +23,8 @@ name_of_user=""
 number_of_entries=0 #TESTOWANIE
 previous_no_entries=0 #TESTOWANIE
 app.secret_key ="thekey"
+UPLOAD_FOLDER="uploaded/"
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route("/")
 def login_page():
@@ -175,28 +179,55 @@ def buystuf():
     if len(session["basket"]) < 1:
         return "no items in basket."
     else:
-        #usuniecie z bazy danych z ilosci
         for prod in session["basket"]:
             prod_name=prod.replace("_"," ")
             prod_json=prepare_json([prod_name])
             prod_json=prod_json[1:len(prod_json)-1]
-            print(prod_json)
             normal_json=json.loads(prod_json)
-            print(normal_json)
             normal_json["quantity"]=int(normal_json["quantity"])-1
-            print(normal_json["quantity"])
             if normal_json["quantity"] < 0:
                 normal_json["quantity"]=1
                 return "some of items are sold out, refresh main page."
             to_write_json=json.dumps(normal_json)
-            print("to write json: ")
-            print(to_write_json)
             redis_db.mset({prod_name:to_write_json})
-
 
         dl=len(session["basket"])
         session["basket"]=[]
         return "you bought "+str(dl)+" items."
+
+@app.route("/redirect_upload")
+def redup():
+    return render_template("upload.html")
+
+@app.route("/upload_file", methods=["POST"])
+def upload_image():
+    file=request.files["plik"]
+
+    path=app.config['UPLOAD_FOLDER']
+    Path(path).mkdir(parents=True, exist_ok=True)
+
+    save_location=path+"/"+str(file.filename)
+    file.save(save_location)
+    return redirect("/redirect_upload")
+
+@app.route("/redirect_browse")
+def redbrowse():
+    return render_template("browse.html")
+
+@app.route("/files")
+def show_files():
+    path=app.config['UPLOAD_FOLDER']
+    files=os.listdir(path)
+    return files
+
+@app.route("/file/<filename>")
+def fetch_file(filename):
+    path=app.config['UPLOAD_FOLDER']+"/"+str(filename)
+    return send_file(path)
+
+@app.route("/gotocontact")
+def contact():
+    return render_template("contact.html")
 
 if __name__=="__main__":
     app.run(host="0.0.0.0", port=5000, threaded=True) # threaded = True dla long pollingu

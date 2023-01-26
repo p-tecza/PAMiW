@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>the shop</title>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <script>var logoutVar=false</script>
+
+    <script>
+    function getFiles(){
+        fetch("/files").then(e=>e.json()).then(files=>{
+        console.log(files)
+        document.getElementById("file_upload").innerHTML+="<ul>"
+        for(var x=0; x<files.length;x++){
+            document.getElementById("file_upload").innerHTML+='<li><a href="/file/'+files[x]+'">'+files[x]+'</a></li>'
+        }
+        document.getElementById("file_upload").innerHTML+="</ul>"
+        })
+    }    
+        
+    </script>
+
+   
+</head>
+<body onload="getFiles()">
+
+<p class="p_center_L">browse uploaded files</p>
+
+<div id="file_upload">
+
+
+
+</div>
+
+
+
+
+<div id="table_div">
+<table class="center_table"><tr>
+<form action="/">
+    <td><input type="submit" class="login_button" value="return"></td>
+</form>
+</tr></table>
+</div>
+<p class="p_center_S" id="info"></p>
+
+</body>
+</html>

@@ -202,3 +202,23 @@ li.left_menu_button:hover{
 .hand_pointer:hover{
     cursor:pointer;
 }
+
+a.left:link {
+    text-decoration: none;
+    color:white;
+}
+
+a.left:hover {
+    text-decoration: underline;
+    color:white;
+}
+
+a.left:visited {
+    text-decoration: none;
+    color:white;
+}
+
+a.left:active {
+    text-decoration: none;
+    color:white;
+}
