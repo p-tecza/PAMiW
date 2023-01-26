@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>the shop</title>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <script>var logoutVar=false</script>
+
+    <script>
+        function getProducts(){
+            fetch("/getproducts").then(
+                (e) => e.json()).then(e=>{
+                    console.log(e)
+
+                    const set = new Set()
+                    var arr=[]
+                    counts={}
+                    e.forEach(function (x) { counts[x] = (counts[x] || 0) + 1; });
+                    console.log(counts)
+                    
+                    document.getElementById("info").innerHTML="<ul>"
+                    Object.entries(counts).forEach(([key, value]) => {
+                    console.log(key, value);
+                    document.getElementById("info").innerHTML+="<li>"+key+": "+value+"</li>"
+                    });
+                    
+                    document.getElementById("info").innerHTML+="</ul>"
+                })
+        }
+
+        function resetBasket(){
+            fetch("/reset_basket").then(e=>{
+                window.location.reload();
+            })
+        }
+
+        function buy(){
+            fetch("/buystuff").then(e=>e.text()).then((e)=>{
+                document.getElementById("status").innerHTML=e;
+                setTimeout(()=>{
+                    window.location.reload()
+                }, 3000);
+            })
+        }
+
+    </script>
+</head>
+<body onload='getProducts()'>
+
+<p class="p_center_L">your_basket:</p>
+<p class="p_center_S" id="info"></p>
+<div id="table_div">
+<table class="center_table"><tr>
+<td><button onclick="buy()" class="login_button">buy</button></td>
+<td><button onclick="resetBasket()" class="login_button">reset</button></td>
+<form action="/">
+    <td><input type="submit" class="login_button" value="return"></td>
+</form>
+</tr></table>
+</div>
+
+<p class="p_center_S" id="status"></p>
+
+</body>
+</html>

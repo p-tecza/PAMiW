@@ -25,6 +25,16 @@
                     document.getElementById("price").innerHTML="price: "+price_here;
                 })
         }
+
+        function sendProduct(){
+            let val='{{product}}';
+            fetch("/addtobasket/"+val).then(
+                (e) => e.text()).then(tekst =>{
+                    console.log(tekst)
+                    document.getElementById("info").innerHTML="successfully added to basket: "+val
+                }
+            )
+        }
     </script>
 </head>
 <body onload='getProduct()'>
@@ -32,6 +42,17 @@
 <p class="p_center_L">product:{{product}}</p>
 <div id="product_image" class="center_this"></div>
 <p class="p_center_L" id="price"></p>
+<p class="p_center_XS" id="opis">placeholder description: the purpose of a product description is to supply customers with important information about<br>
+    the features and key benefits of the product so they're compelled to buy.</p>
+<div id="table_div">
+<table class="center_table"><tr>
+<td><button onclick="sendProduct()" class="login_button">add</button></td>
+<form action="/">
+    <td><input type="submit" class="login_button" value="return"></td>
+</form>
+</tr></table>
+</div>
+<p class="p_center_S" id="info"></p>
 
 </body>
 </html>

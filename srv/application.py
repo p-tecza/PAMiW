@@ -1,7 +1,9 @@
 from flask import Flask, redirect, url_for, render_template, request, make_response, send_file, session
 from bcrypt import checkpw, hashpw, gensalt
+from flask_session import Session
 from uuid import uuid4
 import redis
+import json
 
 app=Flask(__name__)
 redis_url = "redis://127.0.0.1"
@@ -9,6 +11,10 @@ app.config["REDIS_URL"] = redis_url
 redis_db=redis.Redis()
 redis_user_db=redis.Redis(db=1)
 redis_email_db=redis.Redis(db=2)
+
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
+Session(app)
 
 authenticated_users={}
 name_of_user=""
@@ -19,11 +25,11 @@ app.secret_key ="thekey"
 @app.route("/")
 def login_page():
     sid = request.cookies.get("sid")
-    session['things']=[]
     if sid in authenticated_users:
         global number_of_entries #TESTOWANIE
         number_of_entries+=1 #TESTOWANIE
         return render_template("index.html",name_pass=name_of_user, number_of_entries=number_of_entries)
+    session['basket']=[]
     return render_template("login.html")
 
 @app.route("/page", methods=["POST","GET"])
@@ -133,7 +139,6 @@ def response_image2(image_name):
 def prod(prod_name):
     return render_template("product.html",product=prod_name)
 
-
 @app.route("/product_image/<product_name>")
 def prod_im(product_name):
     print("BEFORE PROD NAME: "+product_name)
@@ -144,6 +149,54 @@ def prod_im(product_name):
     #print("PROD JSON: ",product_json)
     #prods=prepare_json(product_json)
     return prod
+
+@app.route("/addtobasket/<product_name>")
+def add_basket(product_name):
+    session["basket"].append(product_name)
+    print(session["basket"])
+    return "ok"
+
+@app.route("/basketpage")
+def redbasket():
+    return render_template("basket.html")
+
+
+@app.route("/getproducts")
+def getprods():
+    return session["basket"]
+
+@app.route("/reset_basket")
+def resbas():
+    session["basket"]=[]
+    return "ok"
+
+@app.route("/buystuff")
+def buystuf():
+    if len(session["basket"]) < 1:
+        return "no items in basket."
+    else:
+        #usuniecie z bazy danych z ilosci
+        for prod in session["basket"]:
+            prod_name=prod.replace("_"," ")
+            prod_json=prepare_json([prod_name])
+            prod_json=prod_json[1:len(prod_json)-1]
+            print(prod_json)
+            normal_json=json.loads(prod_json)
+            print(normal_json)
+            normal_json["quantity"]=int(normal_json["quantity"])-1
+            print(normal_json["quantity"])
+            if normal_json["quantity"] < 0:
+                normal_json["quantity"]=1
+                return "some of items are sold out, refresh main page."
+            to_write_json=json.dumps(normal_json)
+            print("to write json: ")
+            print(to_write_json)
+            redis_db.mset({prod_name:to_write_json})
+
+
+        dl=len(session["basket"])
+        session["basket"]=[]
+        return "you bought "+str(dl)+" items."
 
 if __name__=="__main__":
     app.run(host="0.0.0.0", port=5000, threaded=True) # threaded = True dla long pollingu

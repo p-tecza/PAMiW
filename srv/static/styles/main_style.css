@@ -150,7 +150,7 @@ display: none;
 .product_image{
     width:12vw;
     height:20vh;
-    border:1px solid red;
+    border:1px solid gray;
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -196,5 +196,9 @@ li.left_menu_button{
 
 li.left_menu_button:hover{
     background-color: black;
+    cursor:pointer;
+}
+
+.hand_pointer:hover{
     cursor:pointer;
 }

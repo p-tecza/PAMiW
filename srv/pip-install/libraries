@@ -2,3 +2,4 @@ redis
 bcrypt
 flask
 flask_sse
+flask_session

@@ -248,7 +248,7 @@ function prepareImages(pr,im,mn){
         }
     }
 
-    imgDescription.innerHTML= '<a onclick=\"redirectToProduct(\''+prod_spaceless+'\')\">'+pr_short + '...|' + mn+'</a>'
+    imgDescription.innerHTML= '<a class="hand_pointer" onclick=\"redirectToProduct(\''+prod_spaceless+'\')\">'+pr_short + '...|' + mn+'</a>'
     imgDescription.title=pr+" | "+mn;
 
     imgDiv.appendChild(img);
