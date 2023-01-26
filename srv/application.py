@@ -31,9 +31,10 @@ def login_page():
     sid = request.cookies.get("sid")
     if sid in authenticated_users:
         global number_of_entries #TESTOWANIE
-        number_of_entries+=1 #TESTOWANIE
         return render_template("index.html",name_pass=name_of_user, number_of_entries=number_of_entries)
     session['basket']=[]
+    # global number_of_entries #TESTOWANIE
+    number_of_entries+=1 #TESTOWANIE
     return render_template("login.html")
 
 @app.route("/page", methods=["POST","GET"])
